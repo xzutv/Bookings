@@ -1,4 +1,4 @@
-package main.java.se.yrgo.dataaccess;
+package se.yrgo.dataaccess;
 
 public class CustomerDao {
     

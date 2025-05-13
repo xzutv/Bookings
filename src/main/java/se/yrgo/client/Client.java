@@ -1,4 +1,4 @@
-package main.java.se.yrgo.client;
+package se.yrgo.client;
 
 public class Client {
     

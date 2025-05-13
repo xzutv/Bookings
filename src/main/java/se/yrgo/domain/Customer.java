@@ -1,5 +1,6 @@
-package main.java.se.yrgo.domain;
+package se.yrgo.domain;
 
 public class Customer {
-    
+
 }
+ 
