@@ -1,0 +1,82 @@
+package se.yrgo.services.customers;
+
+import java.util.*;
+
+import se.yrgo.dataaccess.*;
+import se.yrgo.domain.*;
+
+public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
+
+    private final CustomerDao customerDao;
+
+    public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
+
+    @Override
+    public void newCustomer(Customer newCustomer) {
+        customerDao.create(newCustomer);
+    }
+
+    @Override
+    public void updateCustomer(Customer changedCustomer) {
+        try {
+            customerDao.update(changedCustomer);
+        } catch (BookingNotFoundException e) {
+            System.out.println("Could not update customer details for " + changedCustomer.getCustomerId());
+        }
+    }
+
+    @Override
+    public void deleteCustomer(Customer oldCustomer) {
+        try {
+            customerDao.delete(oldCustomer);
+        } catch (BookingNotFoundException e) {
+            System.out.println("Could not delete customer " + oldCustomer);
+        }
+    }
+
+    @Override
+    public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
+        try {
+            return customerDao.getById(customerId);
+        } catch (BookingNotFoundException e) {
+            throw new CustomerNotFoundException();
+        }
+    }
+
+    @Override
+    public List<Customer> findCustomersByName(String name) {
+        return customerDao.getByName(name);
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        return customerDao.getAllCustomers();
+    }
+
+    @Override
+    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
+        try {
+            return customerDao.getFullCustomerDetail(customerId);
+        } catch (BookingNotFoundException e) {
+            throw new CustomerNotFoundException();
+        }
+    }
+
+    @Override
+    public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
+        try {
+            if (callDetails == null) {
+                throw new IllegalArgumentException("Call details cannot be null.");
+            }
+
+            customerDao.addCall(callDetails, customerId);
+        } catch (BookingNotFoundException e) {
+            throw new CustomerNotFoundException();
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+    }
+
+}
