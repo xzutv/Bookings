@@ -1,11 +1,11 @@
 package se.yrgo.dataaccess;
 
-import java.util.*;
+import java.util.List;
 
-import org.springframework.dao.*;
+import org.springframework.dao.DataAccessException;
 
-import se.yrgo.domain.*;
-import se.yrgo.services.customers.*;
+import se.yrgo.domain.Customer;
+import se.yrgo.services.customers.CustomerNotFoundException;
 
 public interface CustomerDao {
 
@@ -19,11 +19,11 @@ public interface CustomerDao {
 
     public void delete(Customer oldCustomer) throws CustomerNotFoundException;
 
-    Customer getById(String id) throws CustomerNotFoundException;
+    Customer getById(int id) throws CustomerNotFoundException;
 
     List<Customer> getByName(String name);
 
-    Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException; 
+    Customer getFullCustomerDetail(int customerId) throws CustomerNotFoundException; 
 
 
 

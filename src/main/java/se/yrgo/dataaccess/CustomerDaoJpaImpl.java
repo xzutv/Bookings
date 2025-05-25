@@ -26,7 +26,7 @@ public class CustomerDaoJpaImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getById(String id) throws CustomerNotFoundException {
+    public Customer getById(int id) throws CustomerNotFoundException {
         Customer customer = em.find(Customer.class, id);
         if (customer == null) {
             throw new CustomerNotFoundException("No customer found with ID: " + id);
@@ -48,28 +48,21 @@ public class CustomerDaoJpaImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
+    public Customer getFullCustomerDetail(int customerId) throws CustomerNotFoundException {
         Customer customer = em.find(Customer.class, customerId);
         if (customer == null) {
             throw new CustomerNotFoundException("No customer found with ID: " + customerId);
         }
 
         
-        customer.getCalls()
+        customer.getClass();
         return customer;
     }
 
-    @Override
-    public void addCall(Call callDetails, String customerId) throws CustomerNotFoundException {
-        Customer customer = getById(customerId);
-        customer.addCall(callDetails);
-        em.persist(callDetails);
-        em.merge(customer);
-    }
 
     @Override
     public void update(Customer updateCustomer) throws CustomerNotFoundException {
-        Customer existing = getById(updateCustomer.getCustomerId());
+        getFullCustomerDetail(updateCustomer.getCustomerId());
         em.merge(updateCustomer);
     }
 

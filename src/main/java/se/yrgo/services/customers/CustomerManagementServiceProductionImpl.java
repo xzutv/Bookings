@@ -1,12 +1,12 @@
 package se.yrgo.services.customers;
 
-import java.util.*;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import se.yrgo.dataaccess.*;
-import se.yrgo.domain.*;
+import se.yrgo.dataaccess.CustomerDao;
+import se.yrgo.domain.Customer;
 @Service("customerService")
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
@@ -41,7 +41,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
+    public Customer findCustomerById(int customerId) throws CustomerNotFoundException {
 
             return customerDao.getById(customerId);
         
@@ -59,7 +59,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     }
 
     @Override
-    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
+    public Customer getFullCustomerDetail(int customerId) throws CustomerNotFoundException {
             return customerDao.getFullCustomerDetail(customerId);
         
     }

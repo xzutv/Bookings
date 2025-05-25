@@ -12,12 +12,12 @@ public interface CustomerManagementService {
 
     public void deleteCustomer(Customer oldCustomer);
 
-    public Customer findCustomerById(String customerId) throws CustomerNotFoundException;
+    public Customer findCustomerById(int customerId) throws CustomerNotFoundException;
 
     public List<Customer> findCustomersByName(String name);
 
     public List<Customer> getAllCustomers();
 
-    public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException;
+    public Customer getFullCustomerDetail(int customerId) throws CustomerNotFoundException;
 
 }

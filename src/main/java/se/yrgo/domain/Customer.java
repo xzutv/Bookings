@@ -1,8 +1,12 @@
 package se.yrgo.domain;
 
-import java.util.*;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Customer {
@@ -43,7 +47,7 @@ public class Customer {
         return email;
     }
 
-    public void setCustomerId( int customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
