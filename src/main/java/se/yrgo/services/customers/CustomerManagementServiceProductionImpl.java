@@ -2,11 +2,15 @@ package se.yrgo.services.customers;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
 import se.yrgo.dataaccess.*;
 import se.yrgo.domain.*;
-
+@Service("customerService")
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
+    @Autowired
     private final CustomerDao customerDao;
 
     public CustomerManagementServiceProductionImpl(CustomerDao customerDao) {
@@ -31,18 +35,17 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     public void deleteCustomer(Customer oldCustomer) {
         try {
             customerDao.delete(oldCustomer);
-        } catch (BookingNotFoundException e) {
+        } catch (CustomerNotFoundException e) {
             System.out.println("Could not delete customer " + oldCustomer);
         }
     }
 
     @Override
     public Customer findCustomerById(String customerId) throws CustomerNotFoundException {
-        try {
+
             return customerDao.getById(customerId);
-        } catch (BookingNotFoundException e) {
-            throw new CustomerNotFoundException();
-        }
+        
+        
     }
 
     @Override
@@ -57,26 +60,9 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
 
     @Override
     public Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException {
-        try {
             return customerDao.getFullCustomerDetail(customerId);
-        } catch (BookingNotFoundException e) {
-            throw new CustomerNotFoundException();
-        }
+        
     }
 
-    @Override
-    public void recordCall(String customerId, Call callDetails) throws CustomerNotFoundException {
-        try {
-            if (callDetails == null) {
-                throw new IllegalArgumentException("Call details cannot be null.");
-            }
-
-            customerDao.addCall(callDetails, customerId);
-        } catch (BookingNotFoundException e) {
-            throw new CustomerNotFoundException();
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
-    }
 
 }

@@ -1,0 +1,13 @@
+se\yrgo\client\Client.class
+se\yrgo\dataaccess\BookingDaoJpaImpl.class
+se\yrgo\services\bookings\BookingService.class
+se\yrgo\domain\Company.class
+se\yrgo\services\customers\CustomerNotFoundException.class
+se\yrgo\domain\Booking.class
+se\yrgo\advice\PerformanceTimingAdvice.class
+se\yrgo\dataaccess\BookingDao.class
+se\yrgo\services\bookings\BookingServiceProductionImpl.class
+se\yrgo\dataaccess\BookingNotFoundException.class
+se\yrgo\dataaccess\CustomerDao.class
+se\yrgo\domain\Customer.class
+se\yrgo\services\customers\CustomerManagementService.class

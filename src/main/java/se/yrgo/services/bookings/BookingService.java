@@ -13,10 +13,10 @@ public interface BookingService {
 
     public void deleteBooking(Booking oldBooking);
 
-    public List<Booking> getAllBookings(String companyId);
+    public List<Booking> getAllBookings();
 
     public Booking findBookingById(String bookingId) throws BookingNotFoundException; 
 
-    public Booking fullBooking(String bookingId) throws BookingNotFoundException;
+    // public Booking fullBooking(String bookingId) throws BookingNotFoundException;
 
 }

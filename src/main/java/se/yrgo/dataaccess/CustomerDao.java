@@ -13,9 +13,20 @@ public interface CustomerDao {
 
     public void create(Customer newCustomer);
 
-    public List<Customer> getAllCustomers(String customerId);
+    public List<Customer> getAllCustomers();
 
     public void update(Customer updateCustomer) throws CustomerNotFoundException;
 
-    public void delete(Customer oldCustomer) throws BookingNotFoundException;
+    public void delete(Customer oldCustomer) throws CustomerNotFoundException;
+
+    Customer getById(String id) throws CustomerNotFoundException;
+
+    List<Customer> getByName(String name);
+
+    Customer getFullCustomerDetail(String customerId) throws CustomerNotFoundException; 
+
+
+
+
+   
 }

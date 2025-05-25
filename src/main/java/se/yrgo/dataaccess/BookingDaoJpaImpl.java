@@ -17,22 +17,9 @@ public class BookingDaoJpaImpl implements BookingDao {
     @PersistenceContext
     private EntityManager em;
 
-//     @PostConstruct
-//     @Override
-//     public void createTables() throws DataAccessException {
-//         try {
-// //            this.template.update();
-//         }
-//     }
-
     @Override
     public void create(Booking newBooking) {
         em.persist(newBooking);
-    }
-
-    @Override
-    public List<Booking> getAllBookings(String companyId) {
-       return em.createQuery("select * from Bookings").getResultList();
     }
 
     @Override
@@ -45,6 +32,17 @@ public class BookingDaoJpaImpl implements BookingDao {
     public void delete(Booking oldBooking) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public List<Booking> allBookings() {
+        return em.createQuery("select * from Bookings").getResultList();
+    }
+
+    @Override
+    public Booking findById(String id) throws BookingNotFoundException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
 }

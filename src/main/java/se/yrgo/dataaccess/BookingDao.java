@@ -9,8 +9,9 @@ import se.yrgo.domain.*;
 public interface BookingDao {
     
     public void create(Booking newBooking);
-    public List<Booking> getAllBookings(String companyId);
+    public List<Booking> allBookings();
     public void update(Booking updateBooking);
     public void delete(Booking oldBooking);
+    public Booking findById(String id) throws BookingNotFoundException;
 
 }

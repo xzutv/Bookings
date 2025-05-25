@@ -1,5 +1,7 @@
 package se.yrgo.domain;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +13,12 @@ public class Customer {
     private String email;
     private int telephone;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+     @JoinColumn(name = "id") 
+    private Company company;
 
     public Customer(int customerId, String name, String email, int telephone) {
         this.customerId = customerId;

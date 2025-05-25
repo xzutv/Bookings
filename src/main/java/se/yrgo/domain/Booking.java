@@ -11,14 +11,14 @@ public class Booking {
     private int id;
 
     private String customerName;
-    private Calendar startTime;
-    private Calendar endTime;
+    private String startTime;
+    private String endTime;
     private Boolean booked;
     private String notes;
 
-    public Booking() {}
+    public Booking() {};
 
-    public Booking(String customerName, Calendar startTime, Calendar endTime, Boolean booked, String notes) {
+    public Booking(String customerName, String startTime, String endTime, Boolean booked, String notes) {
         this.customerName = customerName;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -51,19 +51,19 @@ public class Booking {
         this.booked = true;
     }
 
-    public Calendar getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Calendar startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Calendar getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Calendar endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -118,6 +118,7 @@ public class Booking {
             return false;
         return true;
     }
+
 
     
 
