@@ -1,7 +1,8 @@
 package se.yrgo.advice;
 
 import org.aspectj.lang.*;
-
+import org.springframework.stereotype.*;
+@Component
 public class PerformanceTimingAdvice {
 
     public Object performTimingMeasurment(ProceedingJoinPoint method) throws Throwable {

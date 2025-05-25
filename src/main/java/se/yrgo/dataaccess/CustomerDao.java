@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.dao.*;
 
 import se.yrgo.domain.*;
+import se.yrgo.services.customers.*;
 
 public interface CustomerDao {
 
@@ -14,7 +15,7 @@ public interface CustomerDao {
 
     public List<Customer> getAllCustomers(String customerId);
 
-    public void update(Customer updateCustomer);
+    public void update(Customer updateCustomer) throws CustomerNotFoundException;
 
     public void delete(Customer oldCustomer) throws BookingNotFoundException;
 }

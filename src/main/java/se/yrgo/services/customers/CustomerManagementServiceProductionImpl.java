@@ -22,7 +22,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
     public void updateCustomer(Customer changedCustomer) {
         try {
             customerDao.update(changedCustomer);
-        } catch (BookingNotFoundException e) {
+        } catch (CustomerNotFoundException e) {
             System.out.println("Could not update customer details for " + changedCustomer.getCustomerId());
         }
     }

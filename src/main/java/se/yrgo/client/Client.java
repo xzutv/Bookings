@@ -5,7 +5,7 @@ import org.springframework.context.support.*;
 public class Client {
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml");
+        ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("production-application.xml");
         
     }
 }
