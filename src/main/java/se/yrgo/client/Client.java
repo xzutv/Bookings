@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import se.yrgo.domain.*;
+import se.yrgo.init.*;
 import se.yrgo.services.activities.*;
 import se.yrgo.services.bookings.BookingService;
 import se.yrgo.services.customers.*;
@@ -15,6 +16,8 @@ public class Client {
     public static void main(String[] args) {
 
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
+            DataInitializer initializer = container.getBean(DataInitializer.class);
+            initializer.run();
             BookingService booking = container.getBean(BookingService.class);
             CustomerManagementService customerService = container.getBean(CustomerManagementService.class);
             ActivityService activityService = container.getBean(ActivityService.class);
@@ -24,45 +27,45 @@ public class Client {
             customerService.newCustomer(new Customer("Mario", "mario@gmail.com", "0736559015"));
 
             // Skapa och lagra en personal
-            Staff personal = new Staff("Haimen", "haimen@gmail.com", "0738888888");
-            staffService.newStaff(personal);
+            Staff staff = new Staff("Haimen", "haimen@gmail.com", "0738888888");
+            staffService.newStaff(staff);
 
             // Skapa och lagra aktiviteter
-            Activity aktivitet1 = new Activity(personal, ActivityType.SPA, "Relaxing spa experience", 60);
-            Activity aktivitet2 = new Activity(personal, ActivityType.CROSSFIT, "Intense workout", 45);
-            activityService.newActivity(aktivitet1);
-            activityService.newActivity(aktivitet2);
+            Activity spa = new Activity(staff, ActivityType.SPA, "Relaxing spa experience", 60);
+            Activity crossfit = new Activity(staff, ActivityType.CROSSFIT, "Intense workout", 45);
+            activityService.newActivity(spa);
+            activityService.newActivity(crossfit);
 
             try (Scanner scanner = new Scanner(System.in)) {
                 System.out.println("Ange kundens namn:");
-                String kundnamn = scanner.nextLine();
+                String customerName = scanner.nextLine().toLowerCase();
 
-                Customer kund = customerService.getAllCustomers()
+                Customer givenCustomer = customerService.getAllCustomers()
                         .stream()
-                        .filter(c -> c.getName().equalsIgnoreCase(kundnamn))
+                        .filter(c -> c.getName().equalsIgnoreCase(customerName))
                         .findFirst()
                         .orElse(null);
 
-                if (kund == null) {
+                if (givenCustomer == null) {
                     System.out.println("Kund hittades inte.");
                     return;
                 }
 
-                List<Activity> aktiviteter = activityService.getAllActivities();
+                List<Activity> activities = activityService.getAllActivities();
                 System.out.println("Tillgängliga aktiviteter:");
-                for (int i = 0; i < aktiviteter.size(); i++) {
-                    System.out.println(i + ": " + aktiviteter.get(i));
+                for (int i = 0; i < activities.size(); i++) {
+                    System.out.println(i + 1 + ": " + activities.get(i));
                 }
 
                 System.out.println("Ange numret på aktiviteten du vill boka:");
-                int aktivitetIndex = Integer.parseInt(scanner.nextLine());
+                int position = Integer.parseInt(scanner.nextLine());
 
-                if (aktivitetIndex < 0 || aktivitetIndex >= aktiviteter.size()) {
+                if (position < 0 || position >= activities.size()) {
                     System.out.println("Ogiltigt val.");
                     return;
                 }
 
-                Activity valdAktivitet = aktiviteter.get(aktivitetIndex);
+                Activity chosenActivity = activities.get(position);
 
                 System.out.println("Ange starttid (t.ex. 2025-12-11 10:00):");
                 String start = scanner.nextLine();
@@ -73,8 +76,8 @@ public class Client {
                 System.out.println("Anteckningar:");
                 String notes = scanner.nextLine();
 
-                Booking nyBokning = new Booking(kund, start, end, true, notes, valdAktivitet);
-                booking.newBooking(nyBokning);
+                Booking createdBooking = new Booking(givenCustomer, start, end, true, notes, chosenActivity);
+                booking.newBooking(createdBooking);
                 System.out.println("Bokning skapad!");
             }
 

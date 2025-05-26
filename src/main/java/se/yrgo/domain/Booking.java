@@ -1,5 +1,7 @@
 package se.yrgo.domain;
 
+import java.time.*;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 

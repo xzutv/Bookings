@@ -17,6 +17,10 @@
         <property name="password" value="" />
     </bean>
 
+    <bean id="dataInitializer" class="se.yrgo.init.DataInitializer"/>
+
+
+
     <!-- JPA EntityManagerFactory -->
     <!-- <bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
