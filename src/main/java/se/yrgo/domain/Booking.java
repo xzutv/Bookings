@@ -1,7 +1,9 @@
 package se.yrgo.domain;
 
-import javax.persistence.*;
-import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Booking {
@@ -28,7 +30,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking for " + this.customerName + " at " + this.startTime.toString() + " - " + this.endTime.toString() + " - " + this.booked + " - " + this.notes;
+        return "Booking for " + customerName + " at " + startTime + " - " + endTime + " - " + booked + " - " + notes;
     }
 
     public int getId() {
