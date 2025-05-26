@@ -18,7 +18,7 @@
     </bean>
 
     <!-- JPA EntityManagerFactory -->
-    <bean id="entityManagerFactory"
+    <!-- <bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="se.yrgo.domain" />
@@ -32,12 +32,34 @@
                 <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>
-    </bean>
+    </bean> -->
+    
+<bean id="sessionFactory"
+    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">                
+	<property name="dataSource" ref="dataSource"/>	
+	<property name="packagesToScan">
+		<list>
+			<value>se.yrgo.domain</value>
+		</list>
+	</property>
+	 <property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.show_sql">true</prop>
+			<prop key="hibernate.hbm2ddl.auto">create</prop>
+		</props>
+	</property>
+</bean>
+
 
     <!-- Transaktioner -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <!-- <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
+    </bean> -->
+
+    <!-- Transaction Manager -->
+<bean id="transactionManager" 
+            class="org.springframework.orm.jpa.JpaTransactionManager" 
+                                             autowire="byType" />
     <tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>

@@ -1,9 +1,9 @@
 package se.yrgo.domain;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import org.hibernate.annotations.*;
 
 @Entity
 public class Booking {
@@ -12,25 +12,34 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String customerName;
+    @ManyToOne
+    private Activity activity;
+
+    @ManyToOne
+    private Customer customer;
+
     private String startTime;
     private String endTime;
-    private Boolean booked;
+    private Boolean isBooked;
     private String notes;
+
+
 
     public Booking() {};
 
-    public Booking(String customerName, String startTime, String endTime, Boolean booked, String notes) {
-        this.customerName = customerName;
+public Booking(Customer customer, String startTime, String endTime, Boolean isBooked, String notes, Activity activity){
+        this.customer = customer;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.booked = booked;
+        this.isBooked = isBooked;
         this.notes = notes;
+        this.activity = activity;
     }
+
 
     @Override
     public String toString() {
-        return "Booking for " + customerName + " at " + startTime + " - " + endTime + " - " + booked + " - " + notes;
+        return "Booking for " + customer.getName() + " at " + startTime + " - " + endTime + " - " + isBooked + " - " + notes;
     }
 
     public int getId() {
@@ -42,15 +51,15 @@ public class Booking {
     }
 
     public String getBookingOwner() {
-        return this.customerName;
+        return this.customer.getName();
     }
 
     public void setBookingOwner(String bookingOwner) {
-        this.customerName = bookingOwner;
+    customer.setName(bookingOwner);
     }
 
     public void isBooked() {
-        this.booked = true;
+        this.isBooked = true;
     }
 
     public String getStartTime() {
@@ -74,10 +83,11 @@ public class Booking {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
-        result = prime * result + ((customerName == null) ? 0 : customerName.hashCode());
+        result = prime * result + ((activity == null) ? 0 : activity.hashCode());
+        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
         result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
         result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        result = prime * result + ((booked == null) ? 0 : booked.hashCode());
+        result = prime * result + ((isBooked == null) ? 0 : isBooked.hashCode());
         result = prime * result + ((notes == null) ? 0 : notes.hashCode());
         return result;
     }
@@ -93,10 +103,15 @@ public class Booking {
         Booking other = (Booking) obj;
         if (id != other.id)
             return false;
-        if (customerName == null) {
-            if (other.customerName != null)
+        if (activity == null) {
+            if (other.activity != null)
                 return false;
-        } else if (!customerName.equals(other.customerName))
+        } else if (!activity.equals(other.activity))
+            return false;
+        if (customer == null) {
+            if (other.customer != null)
+                return false;
+        } else if (!customer.equals(other.customer))
             return false;
         if (startTime == null) {
             if (other.startTime != null)
@@ -108,10 +123,10 @@ public class Booking {
                 return false;
         } else if (!endTime.equals(other.endTime))
             return false;
-        if (booked == null) {
-            if (other.booked != null)
+        if (isBooked == null) {
+            if (other.isBooked != null)
                 return false;
-        } else if (!booked.equals(other.booked))
+        } else if (!isBooked.equals(other.isBooked))
             return false;
         if (notes == null) {
             if (other.notes != null)
@@ -120,6 +135,7 @@ public class Booking {
             return false;
         return true;
     }
+
 
 
     

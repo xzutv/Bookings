@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.dao.*;
 
 import se.yrgo.domain.*;
+import se.yrgo.exceptions.*;
 
 public interface BookingDao {
     

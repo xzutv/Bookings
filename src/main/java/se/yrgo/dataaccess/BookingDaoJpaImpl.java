@@ -6,6 +6,7 @@ import org.springframework.dao.*;
 
 import org.springframework.stereotype.Repository;
 import se.yrgo.domain.*;
+import se.yrgo.exceptions.*;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class BookingDaoJpaImpl implements BookingDao {
 
     @Override
     public List<Booking> allBookings() {
-        return em.createQuery("select * from Bookings").getResultList();
+        return em.createQuery("SELECT b from Booking b", Booking.class).getResultList();
     }
 
     @Override

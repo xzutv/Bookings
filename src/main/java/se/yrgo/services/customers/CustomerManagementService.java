@@ -3,6 +3,7 @@ package se.yrgo.services.customers;
 import java.util.List;
 
 import se.yrgo.domain.Customer;
+import se.yrgo.exceptions.*;
 
 public interface CustomerManagementService {
 

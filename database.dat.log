@@ -1,0 +1,39 @@
+/*C1*/SET SCHEMA PUBLIC
+CONNECT USER SA
+drop table if exists Activity CASCADE
+drop table if exists Booking CASCADE
+drop table if exists Customer CASCADE
+drop table if exists Staff CASCADE
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table Activity (id integer not null, activity varchar(255), description varchar(255), duration integer not null, staff_id integer, primary key (id))
+create table Booking (id integer not null, endTime varchar(255), isBooked boolean, notes varchar(255), startTime varchar(255), activity_id integer, customer_id integer, primary key (id))
+create table Customer (id integer not null, email varchar(255), name varchar(255), telephone varchar(255), primary key (id))
+create table Staff (id integer not null, email varchar(255), name varchar(255), phoneNumber varchar(255), primary key (id))
+alter table Activity add constraint FKqjk1hscew1yy0ctb5klnw91pw foreign key (staff_id) references Staff
+alter table Booking add constraint FKlc3nerq7fmmkc1lb55aevhrlc foreign key (activity_id) references Activity
+alter table Booking add constraint FK4qekekp5xg6s74m9icf4782hl foreign key (customer_id) references Customer
+SET AUTOCOMMIT FALSE
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART WITH 2
+INSERT INTO CUSTOMER VALUES(1,'mario@gmail.com','Mario','0736559015')
+COMMIT
+SET AUTOCOMMIT TRUE
+SET AUTOCOMMIT FALSE
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART WITH 3
+INSERT INTO STAFF VALUES(2,'haimen@gmail.com','Haimen','0738888888')
+COMMIT
+SET AUTOCOMMIT TRUE
+SET AUTOCOMMIT FALSE
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART WITH 4
+INSERT INTO ACTIVITY VALUES(3,'SPA','Relaxing spa experience',60,2)
+COMMIT
+SET AUTOCOMMIT TRUE
+SET AUTOCOMMIT FALSE
+ALTER SEQUENCE HIBERNATE_SEQUENCE RESTART WITH 5
+INSERT INTO ACTIVITY VALUES(4,'CROSSFIT','Intense workout',45,2)
+COMMIT
+SET AUTOCOMMIT TRUE
+SET AUTOCOMMIT FALSE
+SET AUTOCOMMIT TRUE
+SET AUTOCOMMIT FALSE
+SET AUTOCOMMIT TRUE

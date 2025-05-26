@@ -4,22 +4,22 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.*;
 
 import org.springframework.stereotype.Repository;
 
 import se.yrgo.domain.Customer;
-import se.yrgo.services.customers.CustomerNotFoundException;
+import se.yrgo.exceptions.*;
 
 @Repository
+@Transactional
 public class CustomerDaoJpaImpl implements CustomerDao {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public void createTables() {}
 
-
+    @Transactional
     @Override
     public void create(Customer newCustomer) {
         em.persist(newCustomer);
@@ -62,13 +62,13 @@ public class CustomerDaoJpaImpl implements CustomerDao {
 
     @Override
     public void update(Customer updateCustomer) throws CustomerNotFoundException {
-        getFullCustomerDetail(updateCustomer.getCustomerId());
+        getFullCustomerDetail(updateCustomer.getId());
         em.merge(updateCustomer);
     }
 
     @Override
     public void delete(Customer oldCustomer) throws CustomerNotFoundException {
-        Customer customer = getById(oldCustomer.getCustomerId());
+        Customer customer = getById(oldCustomer.getId());
         em.remove(customer);
     }
 }

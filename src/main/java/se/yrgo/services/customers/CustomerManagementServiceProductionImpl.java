@@ -2,12 +2,16 @@ package se.yrgo.services.customers;
 
 import java.util.List;
 
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import se.yrgo.dataaccess.CustomerDao;
 import se.yrgo.domain.Customer;
+import se.yrgo.exceptions.*;
 @Service("customerService")
+@Transactional
 public class CustomerManagementServiceProductionImpl implements CustomerManagementService {
 
     @Autowired
@@ -17,6 +21,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         this.customerDao = customerDao;
     }
 
+    @Transactional
     @Override
     public void newCustomer(Customer newCustomer) {
         customerDao.create(newCustomer);
@@ -27,7 +32,7 @@ public class CustomerManagementServiceProductionImpl implements CustomerManageme
         try {
             customerDao.update(changedCustomer);
         } catch (CustomerNotFoundException e) {
-            System.out.println("Could not update customer details for " + changedCustomer.getCustomerId());
+            System.out.println("Could not update customer details for " + changedCustomer.getName());
         }
     }
 

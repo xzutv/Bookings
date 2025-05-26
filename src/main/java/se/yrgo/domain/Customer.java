@@ -1,41 +1,38 @@
 package se.yrgo.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import java.util.*;
+
+import javax.persistence.*;
 
 @Entity
 public class Customer {
 
     @Id
-    private int customerId;
-    private String name;
-    private String email;
-    private int telephone;
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "id") 
-    private Company company;
+    private String name;
+    private String email;
+    private String telephone;
 
-    public Customer(int customerId, String name, String email, int telephone) {
-        this.customerId = customerId;
+    @OneToMany(mappedBy = "customer")
+    private List<Booking> bookings = new ArrayList<>();
+
+    public Customer(String name, String email, String telephone) {
         this.name = name;
         this.email = email;
         this.telephone = telephone;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getId() {
+        return id;
     }
 
-    public int getTelephone() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTelephone() {
         return telephone;
     }
 
@@ -47,11 +44,7 @@ public class Customer {
         return email;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -64,20 +57,19 @@ public class Customer {
     }
 
     public String toString() {
-        return customerId + "Name: " + name + "Telephone" + telephone + "email" + email;
+        return "Name: " + name + "Telephone" + telephone + "email" + email;
     }
 
-    public Customer() {}
+    public Customer() {
+    }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + customerId;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + telephone;
-        result = prime * result + id;
+        result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
         return result;
     }
 
@@ -90,8 +82,6 @@ public class Customer {
         if (getClass() != obj.getClass())
             return false;
         Customer other = (Customer) obj;
-        if (customerId != other.customerId)
-            return false;
         if (name == null) {
             if (other.name != null)
                 return false;
@@ -102,15 +92,12 @@ public class Customer {
                 return false;
         } else if (!email.equals(other.email))
             return false;
-        if (telephone != other.telephone)
-            return false;
-        if (id != other.id)
+        if (telephone == null) {
+            if (other.telephone != null)
+                return false;
+        } else if (!telephone.equals(other.telephone))
             return false;
         return true;
     }
 
-    
-
 }
-
-

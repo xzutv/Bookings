@@ -1,6 +1,6 @@
-package se.yrgo.dataaccess;
+package se.yrgo.exceptions;
 
-public class BookingNotFoundException extends Exception {
+public class StaffNotFoundException extends Exception {
 
 	/**
 	 * Just to stop warnings.

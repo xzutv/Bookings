@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.*;
 
 import se.yrgo.dataaccess.*;
 import se.yrgo.domain.*;
+import se.yrgo.exceptions.*;
 
 @Transactional
 @Service("bookingService")

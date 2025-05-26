@@ -1,4 +1,4 @@
-package se.yrgo.services.customers;
+package se.yrgo.exceptions;
 
 public class CustomerNotFoundException extends Exception {
     // this is just to stop the annoying warning in Eclipse.
