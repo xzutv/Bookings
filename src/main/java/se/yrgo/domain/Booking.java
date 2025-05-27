@@ -43,6 +43,42 @@ public class Booking {
                 + " Duration: " + activity.getDuration() + " minutes." + " Notes: " + notes;
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public Boolean getIsBooked() {
+        return isBooked;
+    }
+
+    public void setIsBooked(Boolean isBooked) {
+        this.isBooked = isBooked;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public LocalDateTime getEndTime() {
         return endTime;
     }

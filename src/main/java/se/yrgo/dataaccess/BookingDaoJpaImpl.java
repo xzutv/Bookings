@@ -25,8 +25,7 @@ public class BookingDaoJpaImpl implements BookingDao {
 
     @Override
     public void update(Booking updateBooking) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        em.merge(updateBooking);
     }
 
     @Override

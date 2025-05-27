@@ -32,7 +32,9 @@ public class Client {
                     System.out.println("1. Sök efter personal");
                     System.out.println("2. Sök efter kund");
                     System.out.println("3. Skapa en bokning");
-                    System.out.println("4. Avsluta");
+                    System.out.println("4. Ändra en bokning");
+                    System.out.println("5. Ta bort en bokning");
+                    System.out.println("6. Avsluta");
                     System.out.print("Ditt val: ");
 
                     String input = scanner.nextLine().trim();
@@ -136,11 +138,89 @@ public class Client {
                                     chosenActivity.getActivity() + " från " + newBooking.getStartTime() +
                                     " till " + newBooking.getEndTime());
                             break;
-
                         case "4":
+                            List<Booking> allBookings = booking.getAllBookings();
+                            if (allBookings.isEmpty()) {
+                                System.out.println("Inga bokningar att visa.");
+                                break;
+                            }
+
+                            System.out.println("Lista över bokningar:");
+                            for (int i = 0; i < allBookings.size(); i++) {
+                                Booking b = allBookings.get(i);
+                                System.out.println((i + 1) + ": " + b.getCustomer().getName() +
+                                        " - " + b.getActivity() + " (" + b.getStartTime() + ")");
+                            }
+
+                            System.out.print("Välj en bokning att ändra (ange nummer): ");
+                            int editIndex = Integer.parseInt(scanner.nextLine()) - 1;
+                            if (editIndex < 0 || editIndex >= allBookings.size()) {
+                                System.out.println("Ogiltigt val.");
+                                break;
+                            }
+
+                            Booking bookingToEdit = allBookings.get(editIndex);
+
+                            System.out.println("Nuvarande starttid: " + bookingToEdit.getStartTime());
+                            System.out.print("Ange ny starttid (yyyy-MM-dd HH:mm) eller tryck Enter för att behålla: ");
+                            String newStart = scanner.nextLine().trim();
+                            if (!newStart.isEmpty()) {
+                                try {
+                                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                                    LocalDateTime newStartTime = LocalDateTime.parse(newStart, fmt);
+                                    bookingToEdit.setStartTime(newStartTime);
+                                    // räkna om sluttid
+                                    bookingToEdit.setEndTime(
+                                            newStartTime.plusMinutes(bookingToEdit.getActivity().getDuration()));
+                                } catch (Exception e) {
+                                    System.out.println("Ogiltigt datumformat.");
+                                    break;
+                                }
+                            }
+
+                            System.out.print("Ange nya anteckningar eller tryck Enter för att behålla: ");
+                            String newNotes = scanner.nextLine().trim();
+                            if (!newNotes.isEmpty()) {
+                                bookingToEdit.setNotes(newNotes);
+                            }
+
+                            booking.updateBooking(bookingToEdit);
+                            System.out.println("Bokningen har uppdaterats.");
+                            break;
+                        case "5":
+                            List<Booking> bookings = booking.getAllBookings();
+                            if (bookings.isEmpty()) {
+                                System.out.println("Inga bokningar att ta bort.");
+                                break;
+                            }
+
+                            System.out.println("Lista över bokningar:");
+                            for (int i = 0; i < bookings.size(); i++) {
+                                Booking b = bookings.get(i);
+                                System.out.println((i + 1) + ": " + b.getCustomer().getName() +
+                                        " - " + b.getActivity() + " (" + b.getStartTime() + ")");
+                            }
+
+                            System.out.print("Välj bokning att ta bort (ange nummer): ");
+                            int removeIndex = Integer.parseInt(scanner.nextLine()) - 1;
+                            if (removeIndex < 0 || removeIndex >= bookings.size()) {
+                                System.out.println("Ogiltigt val.");
+                                break;
+                            }
+
+                            Booking toRemove = bookings.get(removeIndex);
+                            System.out.print("Är du säker på att du vill ta bort bokningen? (ja/nej): ");
+                            String confirm = scanner.nextLine().trim().toLowerCase();
+                            if (confirm.equals("ja")) {
+                                booking.deleteBooking(toRemove);
+                                System.out.println("Bokningen är borttagen.");
+                            } else {
+                                System.out.println("Avbröt borttagning.");
+                            }
+                            break;
+                        case "6":
                             System.out.println("Avslutar programmet...");
                             return;
-
                         default:
                             System.out.println("Ogiltigt val, försök igen.");
                     }
