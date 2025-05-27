@@ -6,3 +6,46 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+/target/
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+**/logs/
+*.log
+
+# Eclipse / IntelliJ / VS Code
+*.iml
+.idea/
+.project
+.classpath
+.settings/
+.vscode/
+
+# OS-filer
+.DS_Store
+Thumbs.db
+
+# Java build
+*.class
+*.jar
+*.war
+*.ear
+
+# Spring Boot specific
+spring.log
+
+# Test output
+test-output/
+surefire-reports/
+.failures/
+
+# Environment files
+.env
+*.local
+
+# Misc
+*.bak
+*.tmp
+*.swp

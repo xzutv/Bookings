@@ -1,5 +1,7 @@
 package se.yrgo.init;
 
+import java.time.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.stereotype.*;
@@ -18,6 +20,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private ActivityDao activityDao;
+
+    @Autowired
+    private BookingDao bookingDao;
 
     @Override
     public void run(String... args) throws Exception {
@@ -53,6 +58,11 @@ public class DataInitializer implements CommandLineRunner {
         activityDao.create(crossfit);
         activityDao.create(pool);
         activityDao.create(zumba);
+
+        bookingDao.create(new Booking(c, LocalDateTime.of(2025, 5, 27, 14, 30), true, "Customer loves workouts", boxing));
+        bookingDao.create(new Booking(c1, LocalDateTime.of(2025, 10, 13, 14, 45), true, "Customer loves dancing", zumba));
+        bookingDao.create(new Booking(c1, LocalDateTime.of(2025, 10, 14, 16, 45), true, "Customer loves dancing", zumba));
+        bookingDao.create(new Booking(c2, LocalDateTime.of(2025, 6, 3, 13, 15), true, "Customer wants vindruvor for the spa", spa));
 
         System.out.println("Data har skapats! ");
 

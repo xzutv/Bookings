@@ -11,13 +11,16 @@ import se.yrgo.exceptions.*;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.*;
 
+@Transactional
 @Repository
 public class BookingDaoJpaImpl implements BookingDao {
 
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     @Override
     public void create(Booking newBooking) {
             em.persist(newBooking);
