@@ -10,14 +10,12 @@ public interface BookingService {
 
     public void newBooking(Booking newBooking);
 
-    public void updateBooking(Booking updateBooking);
+    public void updateBooking(Booking updateBooking) throws BookingNotFoundException;
 
-    public void deleteBooking(Booking oldBooking);
+    public void deleteBooking(Booking oldBooking) throws BookingNotFoundException;
 
     public List<Booking> getAllBookings();
 
     public Booking findBookingById(String bookingId) throws BookingNotFoundException; 
-
-    // public Booking fullBooking(String bookingId) throws BookingNotFoundException;
 
 }

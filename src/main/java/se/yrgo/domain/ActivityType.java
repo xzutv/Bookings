@@ -3,8 +3,9 @@ package se.yrgo.domain;
 public enum ActivityType {
 
     SPA,
-    SAMBA,
+    ZUMBA,
     POOL,
     CROSSFIT,
+    BOXING
     
 }

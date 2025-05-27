@@ -35,9 +35,8 @@ public class StaffProductionImpl implements StaffService{
     }
 
     @Override
-    public List<Staff> getStaffList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllBookings'");
+    public List<Staff> getAllStaff() {
+        return staffDao.allStaff();
     }
 
     @Override

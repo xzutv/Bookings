@@ -20,7 +20,7 @@ public class BookingDaoJpaImpl implements BookingDao {
 
     @Override
     public void create(Booking newBooking) {
-        em.persist(newBooking);
+            em.persist(newBooking);
     }
 
     @Override
@@ -31,19 +31,23 @@ public class BookingDaoJpaImpl implements BookingDao {
 
     @Override
     public void delete(Booking oldBooking) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Booking booking = em.find(Booking.class, oldBooking.getId());
+        em.remove(booking);
     }
 
     @Override
     public List<Booking> allBookings() {
-        return em.createQuery("SELECT b from Booking b", Booking.class).getResultList();
+        return em.createQuery("select b from Booking b", Booking.class).getResultList();
     }
 
     @Override
     public Booking findById(String id) throws BookingNotFoundException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        try {
+            return (Booking)em.createQuery("select b from Booking as b where b.id=:id").setParameter("id", id).getSingleResult();
+
+        }catch (javax.persistence.NoResultException e) {
+            throw new BookingNotFoundException();
+        }
     }
 
 }

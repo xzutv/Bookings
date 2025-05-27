@@ -13,7 +13,7 @@ public interface StaffService {
 
     public void deleteStaff(Staff oldStaff);
 
-    public List<Staff> getStaffList();
+    public List<Staff> getAllStaff();
 
     public Staff findStaffById(int staffId);
 

@@ -28,21 +28,16 @@ public class BookingServiceProductionImpl implements BookingService {
         dao.update(updateBooking);
     }
 
+    @Transactional
     @Override
-    public void deleteBooking(Booking oldBooking) {
-        dao.delete(oldBooking);
+    public void deleteBooking(Booking oldBooking) throws BookingNotFoundException{
+            dao.delete(oldBooking);
     }
 
     @Override
-    public Booking findBookingById(String bookingId) throws BookingNotFoundException {
-        return dao.findById(bookingId);
+    public Booking findBookingById(String bookingId) throws BookingNotFoundException{
+            return dao.findById(bookingId);
     }
-
-    // @Override
-    // public Booking fullBooking(String bookingId) throws BookingNotFoundException
-    // {
-    // // return ;
-    // }
 
     @Override
     public List<Booking> getAllBookings() {

@@ -84,6 +84,6 @@ public class Activity {
     
     @Override
     public String toString() {
-        return "Activity: " + activity + " Description: " + description + " Duration: " + duration;
+        return "Activity: " + activity + " Description: " + description + " Duration: " + duration + " minutes";
     }
 }
