@@ -26,124 +26,124 @@ public class Client {
             ActivityService activityService = container.getBean(ActivityService.class);
             StaffService staffService = container.getBean(StaffService.class);
 
-            Scanner scanner = new Scanner(System.in);
+            try (Scanner scanner = new Scanner(System.in)) {
+                while (true) {
+                    System.out.println("\n--- HUVUDMENY ---");
+                    System.out.println("1. Sök efter personal");
+                    System.out.println("2. Sök efter kund");
+                    System.out.println("3. Skapa en bokning");
+                    System.out.println("4. Avsluta");
+                    System.out.print("Ditt val: ");
 
-            while (true) {
-                System.out.println("\n--- HUVUDMENY ---");
-                System.out.println("1. Sök efter personal");
-                System.out.println("2. Sök efter kund");
-                System.out.println("3. Skapa en bokning");
-                System.out.println("4. Avsluta");
-                System.out.print("Ditt val: ");
+                    String input = scanner.nextLine().trim();
 
-                String input = scanner.nextLine().trim();
-
-                switch (input) {
-                    case "1":
-                        System.out.print("Ange namn på personal: ");
-                        String staffName = scanner.nextLine().trim();
-                        Staff staff = staffService.getAllStaff().stream()
-                                .filter(s -> s.getName().equalsIgnoreCase(staffName))
-                                .findFirst()
-                                .orElse(null);
-
-                        if (staff != null) {
-                            System.out.println("Hittade personal: " + staff.getName());
-                        } else {
-                            System.out.println("Ingen personal hittades med det namnet.");
-                        }
-                        break;
-
-                    case "2":
-                        System.out.print("Ange namn på kund: ");
-                        String customerName = scanner.nextLine().trim();
-                        Customer customer = customerService.getAllCustomers().stream()
-                                .filter(c -> c.getName().equalsIgnoreCase(customerName))
-                                .findFirst()
-                                .orElse(null);
-
-                        if (customer != null) {
-                            System.out.println("Hittade kund: " + customer.getName());
-                        } else {
-                            System.out.println("Ingen kund hittades med det namnet.");
-                        }
-                        break;
-
-                    case "3":
-                        System.out.println("Skapar en ny bokning...");
-
-                        Customer givenCustomer = null;
-                        while (givenCustomer == null) {
-                            System.out.println("Ange kundens namn (eller 'x' för att avbryta):");
-                            String name = scanner.nextLine().trim();
-                            if (name.equalsIgnoreCase("x"))
-                                break;
-
-                            givenCustomer = customerService.getAllCustomers().stream()
-                                    .filter(c -> c.getName().equalsIgnoreCase(name))
+                    switch (input) {
+                        case "1":
+                            System.out.print("Ange namn på personal: ");
+                            String staffName = scanner.nextLine().trim();
+                            Staff staff = staffService.getAllStaff().stream()
+                                    .filter(s -> s.getName().equalsIgnoreCase(staffName))
                                     .findFirst()
                                     .orElse(null);
 
-                            if (givenCustomer == null) {
-                                System.out.println("Kund hittades inte. Försök igen.");
+                            if (staff != null) {
+                                System.out.println("Hittade personal: " + staff.getName());
+                            } else {
+                                System.out.println("Ingen personal hittades med det namnet.");
                             }
-                        }
-
-                        if (givenCustomer == null)
                             break;
 
-                        List<Activity> activities = activityService.getAllActivities();
-                        System.out.println("Tillgängliga aktiviteter:");
-                        for (int i = 0; i < activities.size(); i++) {
-                            System.out.println((i + 1) + ": " + activities.get(i).getActivity() + " ("
-                                    + activities.get(i).getDuration() + " min)");
-                        }
+                        case "2":
+                            System.out.print("Ange namn på kund: ");
+                            String customerName = scanner.nextLine().trim();
+                            Customer customer = customerService.getAllCustomers().stream()
+                                    .filter(c -> c.getName().equalsIgnoreCase(customerName))
+                                    .findFirst()
+                                    .orElse(null);
 
-                        System.out.print("Ange numret på aktiviteten du vill boka: ");
-                        int position;
-                        try {
-                            position = Integer.parseInt(scanner.nextLine().trim()) - 1;
-                        } catch (NumberFormatException e) {
-                            System.out.println("Felaktig inmatning.");
+                            if (customer != null) {
+                                System.out.println("Hittade kund: " + customer.getName());
+                            } else {
+                                System.out.println("Ingen kund hittades med det namnet.");
+                            }
                             break;
-                        }
 
-                        if (position < 0 || position >= activities.size()) {
-                            System.out.println("Ogiltigt val.");
+                        case "3":
+                            System.out.println("Skapar en ny bokning...");
+
+                            Customer givenCustomer = null;
+                            while (givenCustomer == null) {
+                                System.out.println("Ange kundens namn (eller 'x' för att avbryta):");
+                                String name = scanner.nextLine().trim();
+                                if (name.equalsIgnoreCase("x"))
+                                    break;
+
+                                givenCustomer = customerService.getAllCustomers().stream()
+                                        .filter(c -> c.getName().equalsIgnoreCase(name))
+                                        .findFirst()
+                                        .orElse(null);
+
+                                if (givenCustomer == null) {
+                                    System.out.println("Kund hittades inte. Försök igen.");
+                                }
+                            }
+
+                            if (givenCustomer == null)
+                                break;
+
+                            List<Activity> activities = activityService.getAllActivities();
+                            System.out.println("Tillgängliga aktiviteter:");
+                            for (int i = 0; i < activities.size(); i++) {
+                                System.out.println((i + 1) + ": " + activities.get(i).getActivity() + " ("
+                                        + activities.get(i).getDuration() + " min)");
+                            }
+
+                            System.out.print("Ange numret på aktiviteten du vill boka: ");
+                            int position;
+                            try {
+                                position = Integer.parseInt(scanner.nextLine().trim()) - 1;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Felaktig inmatning.");
+                                break;
+                            }
+
+                            if (position < 0 || position >= activities.size()) {
+                                System.out.println("Ogiltigt val.");
+                                break;
+                            }
+
+                            Activity chosenActivity = activities.get(position);
+
+                            System.out.print("Ange starttid (t.ex. 2025-12-11 10:00): ");
+                            String startInput = scanner.nextLine();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                            LocalDateTime startTime;
+
+                            try {
+                                startTime = LocalDateTime.parse(startInput, formatter);
+                            } catch (Exception e) {
+                                System.out.println("Ogiltigt datumformat.");
+                                break;
+                            }
+
+                            System.out.print("Anteckningar (valfritt): ");
+                            String notes = scanner.nextLine();
+
+                            Booking newBooking = new Booking(givenCustomer, startTime, true, notes, chosenActivity);
+                            booking.newBooking(newBooking);
+
+                            System.out.println("Bokning skapad för " + givenCustomer.getName() + " - " +
+                                    chosenActivity.getActivity() + " från " + newBooking.getStartTime() +
+                                    " till " + newBooking.getEndTime());
                             break;
-                        }
 
-                        Activity chosenActivity = activities.get(position);
+                        case "4":
+                            System.out.println("Avslutar programmet...");
+                            return;
 
-                        System.out.print("Ange starttid (t.ex. 2025-12-11 10:00): ");
-                        String startInput = scanner.nextLine();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                        LocalDateTime startTime;
-
-                        try {
-                            startTime = LocalDateTime.parse(startInput, formatter);
-                        } catch (Exception e) {
-                            System.out.println("Ogiltigt datumformat.");
-                            break;
-                        }
-
-                        System.out.print("Anteckningar (valfritt): ");
-                        String notes = scanner.nextLine();
-
-                        Booking newBooking = new Booking(givenCustomer, startTime, true, notes, chosenActivity);
-                        booking.newBooking(newBooking);
-
-                        System.out.println("Bokning skapad för " + givenCustomer.getName() + " - " +
-                                chosenActivity.getActivity() + " från " + newBooking.getStartTime() +
-                                " till " + newBooking.getEndTime());
-                        break;
-
-                    case "4":
-                        System.out.println("Avslutar programmet...");
-                        return;
-
-                    default:
-                        System.out.println("Ogiltigt val, försök igen.");
+                        default:
+                            System.out.println("Ogiltigt val, försök igen.");
+                    }
                 }
             }
 
